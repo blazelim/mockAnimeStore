@@ -18,9 +18,9 @@ public class MockAnimeServiceLayer {
 
     public MockProjectRepository mockRepo = new MockProjectRepository();
 
-    public MockAnimeServiceLayer(EnrichedOrderRepository enrichedOrderRepository, OrderRepository orderRepository) {
+    public MockAnimeServiceLayer(EnrichedOrderRepository enrichedOrderRepository, ProductRepository productRepository, OrderRepository orderRepository) {
         this.enrichedOrderRepository = enrichedOrderRepository;
-        //this.productRepository = productRepository;
+        this.productRepository = productRepository;
         this.orderRepository = orderRepository;
     }
 
@@ -29,13 +29,18 @@ public class MockAnimeServiceLayer {
 //        Mono<Product> product = productRepository.findByName(order.getProductName());
 
         return Mono.just(order)
-                .flatMap(persistOrderToDB(orderRepository))
-                .doOnNext(savedOrder -> {
-                    savedOrder.setProduct(mockRepo.returnAProduct(savedOrder.getProductName()));
-                    savedOrder.setTotalPrice(savedOrder.getProduct().getPrice()*savedOrder.getQuantity());
-                })
-                .doOnNext(saveOrder -> {})
-                .flatMap(persistOrderToElastic(enrichedOrderRepository));
+                .flatMap(o -> productRepository.findByName(o.getProductName()))
+                .flatMap(p -> {
+                    order.setTotalPrice(order.getQuantity() * p.getPrice());
+                    order.setProduct(p);
+                    return enrichedOrderRepository.save(order);
+                });
+//                .doOnNext(savedOrder -> {
+//                    savedOrder.setProduct(mockRepo.returnAProduct(savedOrder.getProductName()));
+//                    savedOrder.setTotalPrice(savedOrder.getProduct().getPrice()*savedOrder.getQuantity());
+//                })
+//                .doOnNext(saveOrder -> {})
+//                .flatMap(persistOrderToElastic(enrichedOrderRepository));
         //return enrichedOrder;
     }
 

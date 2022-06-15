@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 
 @Repository
 public interface ProductRepository extends ReactiveMongoRepository<Product, String> {
-    Product findByName(String productName);
+    Mono<Product> findByName(String productName);
 //    @Query("SELECT * FROM customer WHERE last_name = :lastname")
 //    public Product findByName(String name);
 }

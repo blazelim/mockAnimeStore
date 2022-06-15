@@ -61,7 +61,7 @@ public class ProductController {
 //    }
 
     @GetMapping("{name}")
-    public Product getProduct(@PathVariable String name){
+    public Mono<Product> getProduct(@PathVariable String name){
         return repository.findByName(name);
     }
 
