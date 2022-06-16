@@ -38,6 +38,7 @@ import java.util.List;
 
 
 //WEBFLUX CONTROLLER
+//TODO make this client and rest
 @RestController
 @RequestMapping("/products")
 public class ProductController {
