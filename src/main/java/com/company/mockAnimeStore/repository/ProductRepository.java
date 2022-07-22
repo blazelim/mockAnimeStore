@@ -1,10 +1,7 @@
 package com.company.mockAnimeStore.repository;
 
-import com.company.mockAnimeStore.models.Order;
 import com.company.mockAnimeStore.models.Product;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 

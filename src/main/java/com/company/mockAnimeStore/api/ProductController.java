@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 //@RestController
 //@RequestMapping("/products")
 //public class ProductController {
@@ -38,7 +36,7 @@ import java.util.List;
 
 
 //WEBFLUX CONTROLLER
-//TODO make this client and rest
+// TODO make this client and rest
 @RestController
 @RequestMapping("/products")
 public class ProductController {
